@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class ThreadInfo {
-    String id;
+    String account;
 
     String identity;
 

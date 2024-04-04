@@ -62,7 +62,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             if(threadInfo.getIdentity().equals("enterprise")){
                 threadInfo.setType((String) claims.get("type"));
             }
-            threadInfo.setId((String) claims.get("id"));
+            threadInfo.setAccount((String) claims.get("account"));
             BaseContext.setCurrentInfo(threadInfo);
         } catch (Exception e) {
             log.info("令牌解析失败!");

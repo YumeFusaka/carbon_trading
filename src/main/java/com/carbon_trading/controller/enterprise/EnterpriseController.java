@@ -2,13 +2,12 @@ package com.carbon_trading.controller.enterprise;
 
 import com.carbon_trading.common.properties.JwtProperties;
 import com.carbon_trading.common.result.Result;
-import com.carbon_trading.pojo.DTO.EnterpriseLoginDTO;
+import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.DTO.EnterpriseRegisterDTO;
 import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.VO.LoginVO;
 import com.carbon_trading.service.EnterpriseService;
 import com.carbon_trading.utils.JwtUtils;
-import com.mysql.cj.log.Log;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -47,13 +46,13 @@ public class EnterpriseController {
 
     @PostMapping("/login")
     @Operation(summary = "登录")
-    public Result<LoginVO> login(@RequestBody EnterpriseLoginDTO enterpriseLoginDTO) {
+    public Result<LoginVO> login(@RequestBody LoginDTO enterpriseLoginDTO) {
         log.info("公司登录:{}", enterpriseLoginDTO);
         Enterprise enterprise = enterpriseService.login(enterpriseLoginDTO);
         Map<String,Object> claims = new HashMap<>();
         claims.put("identity", "enterprise");
         claims.put("type",enterprise.getType());
-        claims.put("id",enterprise.getId());
+        claims.put("account",enterprise.getAccount());
         String token = JwtUtils.createToken(jwtProperties.getSecretKey(),jwtProperties.getTtl(),claims);
         log.info("返回token:{}",token);
         return Result.success(LoginVO.builder()
