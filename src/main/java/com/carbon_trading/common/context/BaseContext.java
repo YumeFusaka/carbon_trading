@@ -1,19 +1,21 @@
 package com.carbon_trading.common.context;
 
 // common/context/BaseContext.java
+
 public class BaseContext {
 
-    public static ThreadLocal<String> threadLocal = new ThreadLocal<>();
+    public static ThreadLocal<ThreadInfo> threadLocal = new ThreadLocal<>();
 
-    public static void setCurrentId(String id) {
-        threadLocal.set(id);
+    public static void setCurrentInfo(ThreadInfo threadInfo) {
+        threadLocal.set(threadInfo);
     }
 
-    public static String getCurrentId() {
+    public static ThreadInfo getCurrentInfo() {
         return threadLocal.get();
     }
 
-    public static void removeCurrentId() {
+
+    public static void removeCurrentInfo() {
         threadLocal.remove();
     }
 }

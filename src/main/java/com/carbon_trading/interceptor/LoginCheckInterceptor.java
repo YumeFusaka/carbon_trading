@@ -4,6 +4,7 @@ package com.carbon_trading.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.carbon_trading.common.context.BaseContext;
+import com.carbon_trading.common.context.ThreadInfo;
 import com.carbon_trading.common.properties.JwtProperties;
 import com.carbon_trading.common.result.Result;
 import com.carbon_trading.utils.JwtUtils;
@@ -56,7 +57,13 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         //5.解析token，如果解析失败，返回错误结果（未登录）
         try {
             Claims claims = JwtUtils.parseToken(jwtProperties.getSecretKey(), token);
-            BaseContext.setCurrentId((String) claims.get("studentId"));
+            ThreadInfo threadInfo = new ThreadInfo();
+            threadInfo.setIdentity((String) claims.get("identity"));
+            if(threadInfo.getIdentity().equals("enterprise")){
+                threadInfo.setType((String) claims.get("type"));
+            }
+            threadInfo.setId((String) claims.get("id"));
+            BaseContext.setCurrentInfo(threadInfo);
         } catch (Exception e) {
             log.info("令牌解析失败!");
 
