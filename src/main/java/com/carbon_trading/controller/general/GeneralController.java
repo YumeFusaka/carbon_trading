@@ -2,6 +2,7 @@ package com.carbon_trading.controller.general;
 
 import com.carbon_trading.common.result.Result;
 import com.carbon_trading.pojo.VO.EnterpriseVO;
+import com.carbon_trading.pojo.VO.TradeVO;
 import com.carbon_trading.service.GeneralService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,5 +27,11 @@ public class GeneralController {
     @Operation(summary = "获取所有公司信息")
     public Result<ArrayList<EnterpriseVO>> getEnterprises() {
         return Result.success(generalService.getEnterprises());
+    }
+
+    @GetMapping("/trade")
+    @Operation(summary = "获取所有交易信息")
+    public Result<ArrayList<TradeVO>> getTrades(){
+        return Result.success(generalService.getTrades());
     }
 }
