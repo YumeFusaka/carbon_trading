@@ -9,6 +9,7 @@ import com.carbon_trading.pojo.Entity.GenerateElectricity;
 import com.carbon_trading.pojo.VO.ElectricGridVO;
 import com.carbon_trading.pojo.VO.GenerateElectricityVO;
 import com.carbon_trading.pojo.VO.LoginVO;
+import com.carbon_trading.pojo.VO.TradeVO;
 import com.carbon_trading.service.ElectricGridService;
 import com.carbon_trading.service.EnterpriseService;
 import com.carbon_trading.service.EnterpriseTradeService;
@@ -71,10 +72,12 @@ public class EnterpriseController {
         claims.put("identity", "enterprise");
         claims.put("type",enterprise.getType());
         claims.put("account",enterprise.getAccount());
+        claims.put("name",enterprise.getName());
         String token = JwtUtils.createToken(jwtProperties.getSecretKey(),jwtProperties.getTtl(),claims);
         log.info("返回token:{}",token);
         return Result.success(LoginVO.builder()
                 .Authorization(token)
+                .type(enterprise.getType())
                 .build());
     }
 
@@ -128,4 +131,18 @@ public class EnterpriseController {
         return Result.success();
     }
 
+
+    @PostMapping("/history/trade")
+    @Operation(summary = "历史交易记录")
+    public Result<ArrayList<TradeVO>> historyTrade() {
+        return Result.success(enterpriseTradeService.historyTrade());
+    }
+
+    @PostMapping("/handle/trade")
+    @Operation(summary = "处理交易")
+    public Result handleTrade(@RequestBody HandleTradeDTO handleTradeDTO) {
+        log.info("处理交易:{}", handleTradeDTO);
+        enterpriseTradeService.handleTrade(handleTradeDTO);
+        return Result.success();
+    }
 }

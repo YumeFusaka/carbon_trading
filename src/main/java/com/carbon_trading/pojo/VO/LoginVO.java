@@ -7,4 +7,6 @@ import lombok.Data;
 @Builder
 public class LoginVO {
     String Authorization;
+
+    String type;
 }

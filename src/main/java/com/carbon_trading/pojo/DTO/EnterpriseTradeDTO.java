@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class EnterpriseTradeDTO {
 
-    String id;
+    String receiver_id;
 
     String content;
 

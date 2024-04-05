@@ -10,4 +10,6 @@ public class ThreadInfo {
     String identity;
 
     String type;
+
+    String name;
 }

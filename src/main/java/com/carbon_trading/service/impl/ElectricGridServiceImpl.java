@@ -27,12 +27,13 @@ public class ElectricGridServiceImpl extends ServiceImpl<ElectricGridMapper, Ele
 
     @Override
     public void submit(ElectricGridDTO electricGridDTO) {
-        ElectricGrid electricGrid = new ElectricGrid();
-        BeanUtils.copyProperties(electricGridDTO, electricGrid);
         ThreadInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
+        ElectricGrid electricGrid = new ElectricGrid();
+        BeanUtils.copyProperties(electricGridDTO, electricGrid);
         electricGrid.setAccount(currentInfo.getAccount());
         electricGrid.setCreate_date(LocalDateTime.now());
+        electricGrid.setName(currentInfo.getName());
         electricGrid.setStatus("待审核");
         electricGrid.setConsumption(0.0);  // 调试参数,计算算法后续完成
         electricGridMapper.insert(electricGrid);

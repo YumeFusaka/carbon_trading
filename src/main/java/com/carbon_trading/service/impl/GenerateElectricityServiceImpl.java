@@ -25,11 +25,12 @@ public class GenerateElectricityServiceImpl extends ServiceImpl<GenerateElectric
 
     @Override
     public void submit(GenerateElectricityDTO generateElectricityDTO) {
-        GenerateElectricity generateElectricity = new GenerateElectricity();
-        BeanUtils.copyProperties(generateElectricityDTO, generateElectricity);
         ThreadInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
+        GenerateElectricity generateElectricity = new GenerateElectricity();
+        BeanUtils.copyProperties(generateElectricityDTO, generateElectricity);
         generateElectricity.setAccount(currentInfo.getAccount());
+        generateElectricity.setName(currentInfo.getName());
         generateElectricity.setCreate_date(LocalDateTime.now());
         generateElectricity.setStatus("待审核");
         generateElectricity.setConsumption(0.0);  // 调试参数,计算算法后续完成

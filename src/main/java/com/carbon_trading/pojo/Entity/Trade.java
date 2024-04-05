@@ -16,22 +16,28 @@ public class Trade {
     private Long id;
 
     @TableField("initiator_account")
-    private String initiatorAccount;
+    private String initiator_account;
 
     @TableField("receiver_account")
-    private String receiverAccount;
+    private String receiver_account;
+
+    @TableField("initiator_name")
+    private String initiator_name;
+
+    @TableField("receiver_name")
+    private String receiver_name;
 
     @TableField("content")
     private String content;
 
     @TableField("pay_coin")
-    private Double payCoin;
+    private Double pay_coin;
 
     @TableField("status")
     private String status;
 
     @TableField("create_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createDate;
+    private LocalDateTime create_date;
 
 }

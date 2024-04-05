@@ -44,6 +44,7 @@ public class AdminController {
         Map<String,Object> claims = new HashMap<>();
         claims.put("identity", "admin");
         claims.put("account",admin.getAccount());
+        claims.put("name",admin.getName());
         String token = JwtUtils.createToken(jwtProperties.getSecretKey(),jwtProperties.getTtl(),claims);
         log.info("返回token:{}",token);
         return Result.success(LoginVO.builder()

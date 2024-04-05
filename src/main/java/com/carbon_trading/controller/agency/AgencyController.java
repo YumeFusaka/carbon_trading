@@ -51,6 +51,7 @@ public class AgencyController {
         Map<String,Object> claims = new HashMap<>();
         claims.put("identity", "agency");
         claims.put("account",agency.getAccount());
+        claims.put("name",agency.getName());
         String token = JwtUtils.createToken(jwtProperties.getSecretKey(),jwtProperties.getTtl(),claims);
         log.info("返回token:{}",token);
         return Result.success(LoginVO.builder()

@@ -12,6 +12,8 @@ public class ElectricGridVO {
 
     private String account;
 
+    private String name;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime create_date;
 

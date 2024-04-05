@@ -6,6 +6,6 @@ import com.carbon_trading.pojo.VO.EnterpriseVO;
 
 import java.util.ArrayList;
 
-public interface GeneralService extends IService<Enterprise> {
+public interface  GeneralService extends IService<Enterprise> {
     ArrayList<EnterpriseVO> getEnterprises();
 }

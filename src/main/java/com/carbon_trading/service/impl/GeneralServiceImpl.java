@@ -2,6 +2,7 @@ package com.carbon_trading.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.carbon_trading.common.context.BaseContext;
 import com.carbon_trading.mapper.EnterpriseMapper;
 import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.VO.EnterpriseVO;
@@ -24,6 +25,7 @@ public class GeneralServiceImpl extends ServiceImpl<EnterpriseMapper, Enterprise
 
     @Override
     public ArrayList<EnterpriseVO> getEnterprises() {
+        BaseContext.removeCurrentInfo();
         List<Enterprise> enterprises = enterpriseMapper.selectList(new QueryWrapper<Enterprise>());
         ArrayList<EnterpriseVO> enterpriseVOS = new ArrayList<>();
         for(Enterprise enterprise : enterprises){

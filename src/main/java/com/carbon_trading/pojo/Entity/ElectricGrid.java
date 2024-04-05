@@ -56,4 +56,7 @@ public class ElectricGrid implements Serializable {
 
     @TableField("fix_recovery")
     private Double fix_recovery;
+
+    @TableField("name")
+    private String name;
 }

@@ -63,4 +63,7 @@ public class GenerateElectricity implements Serializable {
     @TableField("electricity")
     private Double electricity;
 
+    @TableField("name")
+    private String name;
+
 }
