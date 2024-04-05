@@ -21,7 +21,6 @@ public class GenerateElectricity implements Serializable {
     private String account;
 
     @TableField("create_date")
-    @DateTimeFormat()
     private LocalDateTime create_date;
 
     @TableField("status")

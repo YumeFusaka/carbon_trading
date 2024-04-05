@@ -12,7 +12,7 @@ public class GenerateElectricityVO {
 
     private String status;
 
-    private LocalDateTime create_time;
+    private LocalDateTime create_date;
 
     private Double consumption;
 

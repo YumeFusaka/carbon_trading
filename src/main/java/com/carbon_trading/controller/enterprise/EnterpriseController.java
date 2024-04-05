@@ -78,7 +78,7 @@ public class EnterpriseController {
     }
 
     @PostMapping("/submit/generateElectricity")
-    @Operation(summary = "提交发电企业数据")
+    @Operation(summary = "提交发电数据")
     public Result generateElectricitySubmit(@RequestBody GenerateElectricityDTO generateElectricityDTO) {
         log.info("提交发电企业数据:{}", generateElectricityDTO);
         generateElectricityService.submit(generateElectricityDTO);
@@ -86,7 +86,7 @@ public class EnterpriseController {
     }
 
     @PostMapping("/submit/electricGrid")
-    @Operation(summary = "提交电网企业数据")
+    @Operation(summary = "提交电网数据")
     public Result electricGridSubmit(@RequestBody ElectricGridDTO electricGridDTO) {
         log.info("提交电网企业数据:{}", electricGridDTO);
         electricGridService.submit(electricGridDTO);
@@ -94,7 +94,7 @@ public class EnterpriseController {
     }
 
     @GetMapping("/history/generateElectricity")
-    @Operation(summary = "获取发电历史提交数据")
+    @Operation(summary = "发电历史数据")
     public Result<ArrayList<GenerateElectricityVO>> getGenerateElectricityHistory() {
         List<GenerateElectricity> generateElectricities = generateElectricityService.queryHistory();
         ArrayList<GenerateElectricityVO> generateElectricityVOS = new ArrayList<>();
@@ -107,15 +107,23 @@ public class EnterpriseController {
     }
 
     @GetMapping("/history/electricityGrid")
-    @Operation(summary = "获取电网历史提交数据")
+    @Operation(summary = "电网历史数据")
     public Result<ArrayList<ElectricGridVO>> getElectricityGridHistory() {
         List<ElectricGrid> electricGrids = electricGridService.queryHistory();
         ArrayList<ElectricGridVO> electricGridVOS = new ArrayList<>();
-        for (ElectricGrid generateElectricity : electricGrids){
+        for (ElectricGrid electricGrid : electricGrids){
             ElectricGridVO electricGridVO = new ElectricGridVO();
-            BeanUtils.copyProperties(generateElectricity, electricGridVO);
+            BeanUtils.copyProperties(electricGrid, electricGridVO);
             electricGridVOS.add(electricGridVO);
         }
         return Result.success(electricGridVOS);
     }
+
+    @PostMapping("/trade")
+    @Operation(summary = "交易")
+    public Result trade() {
+
+        return Result.success();
+    }
+
 }
