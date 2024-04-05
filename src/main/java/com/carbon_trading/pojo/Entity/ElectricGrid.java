@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @TableName("electric_grid")
 @Data
@@ -22,7 +22,7 @@ public class ElectricGrid implements Serializable {
     private String account;
 
     @TableField("create_date")
-    private Date create_date;
+    private LocalDateTime create_date;
 
     @TableField("status")
     private String status;

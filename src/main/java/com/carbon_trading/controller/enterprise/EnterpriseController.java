@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.carbon_trading.common.context.BaseContext;
 import com.carbon_trading.common.properties.JwtProperties;
 import com.carbon_trading.common.result.Result;
+import com.carbon_trading.pojo.DTO.ElectricGridDTO;
+import com.carbon_trading.pojo.DTO.GenerateElectricityDTO;
 import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.DTO.EnterpriseRegisterDTO;
 import com.carbon_trading.pojo.Entity.Enterprise;
@@ -77,26 +79,19 @@ public class EnterpriseController {
                 .build());
     }
 
-    @PostMapping("submitData")
-    @Operation(summary = "提交数据")
-    public Result submitData(HttpServletRequest request) throws IOException {
-        // 获取请求体的输入流
-        BufferedReader reader = request.getReader();
-        // 读取请求体数据
-        StringBuilder requestBody = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null)
-            requestBody.append(line);
-        // 关闭输入流
-        reader.close();
-        ObjectMapper objectMapper = new ObjectMapper();
+    @PostMapping("/submit/generateElectricity")
+    @Operation(summary = "提交发电企业数据")
+    public Result generateElectricitySubmit(@RequestBody GenerateElectricityDTO generateElectricityDTO) {
+        log.info("提交发电企业数据:{}", generateElectricityDTO);
+        generateElectricityService.submit(generateElectricityDTO);
+        return Result.success();
+    }
 
-        String identity = BaseContext.getCurrentInfo().getIdentity();
-        if(identity.equals("1")) {
-
-        }else if(identity.equals("2")){
-
-        }
+    @PostMapping("/submit/electricGrid")
+    @Operation(summary = "提交电网企业数据")
+    public Result electricGridSubmit(@RequestBody ElectricGridDTO electricGridDTO) {
+        log.info("提交电网企业数据:{}", electricGridDTO);
+        electricGridService.submit(electricGridDTO);
         return Result.success();
     }
 }

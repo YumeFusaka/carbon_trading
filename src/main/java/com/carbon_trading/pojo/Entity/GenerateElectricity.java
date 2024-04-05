@@ -5,9 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @TableName("generate_electricity")
@@ -20,7 +21,8 @@ public class GenerateElectricity implements Serializable {
     private String account;
 
     @TableField("create_date")
-    private Date create_date;
+    @DateTimeFormat()
+    private LocalDateTime create_date;
 
     @TableField("status")
     private String status;
