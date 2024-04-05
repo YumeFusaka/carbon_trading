@@ -14,7 +14,6 @@ public class BaseContext {
         return threadLocal.get();
     }
 
-
     public static void removeCurrentInfo() {
         threadLocal.remove();
     }

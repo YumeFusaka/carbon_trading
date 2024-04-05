@@ -33,7 +33,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         //1.获取请求url
         //2.判断请求url中是否包含login，如果包含，说明是登录操作，放行
         //3.获取请求头中的令牌（token）
-        String token = request.getHeader("token");
+        String token = request.getHeader("Authorization");
         log.info("从请求头中获取的令牌：{}", token);
 
         //4.判断令牌是否存在，如果不存在，返回错误结果（未登录）

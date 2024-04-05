@@ -25,4 +25,7 @@ public class Enterprise {
     @TableField("name")
     String name;
 
+    @TableField("carbon_coin")
+    Double carbon_coin;
+
 }
