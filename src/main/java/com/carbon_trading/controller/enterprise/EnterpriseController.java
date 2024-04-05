@@ -2,10 +2,7 @@ package com.carbon_trading.controller.enterprise;
 
 import com.carbon_trading.common.properties.JwtProperties;
 import com.carbon_trading.common.result.Result;
-import com.carbon_trading.pojo.DTO.ElectricGridDTO;
-import com.carbon_trading.pojo.DTO.GenerateElectricityDTO;
-import com.carbon_trading.pojo.DTO.LoginDTO;
-import com.carbon_trading.pojo.DTO.EnterpriseRegisterDTO;
+import com.carbon_trading.pojo.DTO.*;
 import com.carbon_trading.pojo.Entity.ElectricGrid;
 import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.Entity.GenerateElectricity;
@@ -14,6 +11,7 @@ import com.carbon_trading.pojo.VO.GenerateElectricityVO;
 import com.carbon_trading.pojo.VO.LoginVO;
 import com.carbon_trading.service.ElectricGridService;
 import com.carbon_trading.service.EnterpriseService;
+import com.carbon_trading.service.EnterpriseTradeService;
 import com.carbon_trading.service.GenerateElectricityService;
 import com.carbon_trading.utils.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,6 +43,9 @@ public class EnterpriseController {
 
     @Autowired
     private ElectricGridService electricGridService;
+
+    @Autowired
+    private EnterpriseTradeService enterpriseTradeService;
 
     @GetMapping("/hello")
     @Operation(summary = "hello")
@@ -121,8 +122,9 @@ public class EnterpriseController {
 
     @PostMapping("/trade")
     @Operation(summary = "交易")
-    public Result trade() {
-
+    public Result trade(@RequestBody EnterpriseTradeDTO enterpriseTradeDTO) {
+        log.info("发起交易:{}",enterpriseTradeDTO);
+        enterpriseTradeService.trade(enterpriseTradeDTO);
         return Result.success();
     }
 
