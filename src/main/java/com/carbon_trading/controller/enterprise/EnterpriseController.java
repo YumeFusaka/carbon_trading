@@ -1,33 +1,31 @@
 package com.carbon_trading.controller.enterprise;
 
-import com.alibaba.fastjson.JSON;
-import com.carbon_trading.common.context.BaseContext;
 import com.carbon_trading.common.properties.JwtProperties;
 import com.carbon_trading.common.result.Result;
 import com.carbon_trading.pojo.DTO.ElectricGridDTO;
 import com.carbon_trading.pojo.DTO.GenerateElectricityDTO;
 import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.DTO.EnterpriseRegisterDTO;
+import com.carbon_trading.pojo.Entity.ElectricGrid;
 import com.carbon_trading.pojo.Entity.Enterprise;
+import com.carbon_trading.pojo.Entity.GenerateElectricity;
+import com.carbon_trading.pojo.VO.ElectricGridVO;
+import com.carbon_trading.pojo.VO.GenerateElectricityVO;
 import com.carbon_trading.pojo.VO.LoginVO;
 import com.carbon_trading.service.ElectricGridService;
 import com.carbon_trading.service.EnterpriseService;
 import com.carbon_trading.service.GenerateElectricityService;
 import com.carbon_trading.utils.JwtUtils;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -93,5 +91,31 @@ public class EnterpriseController {
         log.info("提交电网企业数据:{}", electricGridDTO);
         electricGridService.submit(electricGridDTO);
         return Result.success();
+    }
+
+    @GetMapping("/history/generateElectricity")
+    @Operation(summary = "获取发电历史提交数据")
+    public Result<ArrayList<GenerateElectricityVO>> getGenerateElectricityHistory() {
+        List<GenerateElectricity> generateElectricities = generateElectricityService.queryHistory();
+        ArrayList<GenerateElectricityVO> generateElectricityVOS = new ArrayList<>();
+        for (GenerateElectricity generateElectricity : generateElectricities){
+            GenerateElectricityVO generateElectricityVO = new GenerateElectricityVO();
+            BeanUtils.copyProperties(generateElectricity, generateElectricityVO);
+            generateElectricityVOS.add(generateElectricityVO);
+        }
+        return Result.success(generateElectricityVOS);
+    }
+
+    @GetMapping("/history/electricityGrid")
+    @Operation(summary = "获取电网历史提交数据")
+    public Result<ArrayList<ElectricGridVO>> getElectricityGridHistory() {
+        List<ElectricGrid> electricGrids = electricGridService.queryHistory();
+        ArrayList<ElectricGridVO> electricGridVOS = new ArrayList<>();
+        for (ElectricGrid generateElectricity : electricGrids){
+            ElectricGridVO electricGridVO = new ElectricGridVO();
+            BeanUtils.copyProperties(generateElectricity, electricGridVO);
+            electricGridVOS.add(electricGridVO);
+        }
+        return Result.success(electricGridVOS);
     }
 }

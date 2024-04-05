@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 @Data
 public class ElectricGrid implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -56,5 +54,4 @@ public class ElectricGrid implements Serializable {
 
     @TableField("fix_recovery")
     private Double fix_recovery;
-
 }
