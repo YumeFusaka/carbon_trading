@@ -132,7 +132,7 @@ public class EnterpriseController {
     }
 
 
-    @PostMapping("/history/trade")
+    @GetMapping("/history/trade")
     @Operation(summary = "历史交易记录")
     public Result<ArrayList<TradeVO>> historyTrade() {
         return Result.success(enterpriseTradeService.historyTrade());

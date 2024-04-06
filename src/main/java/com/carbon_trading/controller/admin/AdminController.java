@@ -36,7 +36,6 @@ public class AdminController {
         return Result.success("hello admin");
     }
 
-
     @PostMapping("/login")
     @Operation(summary = "登录")
     public Result<LoginVO> login(@RequestBody LoginDTO adminLoginDTO) {
