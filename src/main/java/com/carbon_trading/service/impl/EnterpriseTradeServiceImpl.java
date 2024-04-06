@@ -73,7 +73,9 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
         ThreadInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
         UpdateWrapper<Trade> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id", handleTradeDTO.getTrade_id()).eq("receiver_account",currentInfo.getAccount()).set("status","已完成");
-        enterpriseTradeMapping.update(null, wrapper);
+        wrapper.eq("id", handleTradeDTO.getTrade_id())
+                .eq("receiver_account",currentInfo.getAccount())
+                .set("status",handleTradeDTO.getStatus()==1?"已接受":"已拒绝");
+        enterpriseTradeMapping.update(wrapper);
     }
 }

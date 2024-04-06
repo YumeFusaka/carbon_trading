@@ -2,6 +2,7 @@ package com.carbon_trading.controller.admin;
 
 import com.carbon_trading.common.properties.JwtProperties;
 import com.carbon_trading.common.result.Result;
+import com.carbon_trading.pojo.DTO.AuditDTO;
 import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.Entity.Admin;
 import com.carbon_trading.pojo.Entity.Enterprise;
@@ -50,5 +51,21 @@ public class AdminController {
         return Result.success(LoginVO.builder()
                 .Authorization(token)
                 .build());
+    }
+
+    @PostMapping("/audit/generateElectric")
+    @Operation(summary = "审核发电")
+    public Result auditGenerateElectric(@RequestBody AuditDTO auditDTO) {
+        log.info("审核发电:{}", auditDTO);
+        adminService.auditGenerateElectric(auditDTO);
+        return Result.success();
+    }
+
+    @PostMapping("/audit/electricGrid")
+    @Operation(summary = "审核电网")
+    public Result auditElectricGrid(@RequestBody AuditDTO auditDTO) {
+        log.info("审核电网:{}", auditDTO);
+        adminService.auditElectricGrid(auditDTO);
+        return Result.success();
     }
 }

@@ -1,7 +1,9 @@
 package com.carbon_trading.controller.general;
 
 import com.carbon_trading.common.result.Result;
+import com.carbon_trading.pojo.VO.ElectricGridVO;
 import com.carbon_trading.pojo.VO.EnterpriseVO;
+import com.carbon_trading.pojo.VO.GenerateElectricityVO;
 import com.carbon_trading.pojo.VO.TradeVO;
 import com.carbon_trading.service.GeneralService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,15 +25,27 @@ public class GeneralController {
     @Autowired
     private GeneralService generalService;
 
-    @GetMapping("/enterprises")
+    @GetMapping("/enterprises/list")
     @Operation(summary = "获取所有公司信息")
     public Result<ArrayList<EnterpriseVO>> getEnterprises() {
         return Result.success(generalService.getEnterprises());
     }
 
-    @GetMapping("/trade")
+    @GetMapping("/trade/list")
     @Operation(summary = "获取所有交易信息")
     public Result<ArrayList<TradeVO>> getTrades(){
         return Result.success(generalService.getTrades());
+    }
+
+    @GetMapping("/generateElectricity/list")
+    @Operation(summary = "获取所有发电信息")
+    public Result<ArrayList<GenerateElectricityVO>> generateElectricityList(){
+        return Result.success(generalService.generateElectricityList());
+    }
+
+    @GetMapping("/electricGrid/list")
+    @Operation(summary = "获取所有电网信息")
+    public Result<ArrayList<ElectricGridVO>> electricGridList(){
+        return Result.success(generalService.electricGridList());
     }
 }
