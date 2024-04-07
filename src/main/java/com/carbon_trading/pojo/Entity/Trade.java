@@ -40,4 +40,6 @@ public class Trade {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime create_date;
 
+    @TableField("map_id")
+    private String map_id;
 }

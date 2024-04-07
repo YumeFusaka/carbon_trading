@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.carbon_trading.common.context.BaseContext;
+import com.carbon_trading.component.SoildityComponent;
 import com.carbon_trading.mapper.AdminMapper;
 import com.carbon_trading.mapper.ElectricGridMapper;
 import com.carbon_trading.mapper.GenerateElectricityMapper;
@@ -15,6 +16,8 @@ import com.carbon_trading.pojo.Entity.ElectricGrid;
 import com.carbon_trading.pojo.Entity.GenerateElectricity;
 import com.carbon_trading.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
+import org.fisco.bcos.sdk.abi.ABICodecException;
+import org.fisco.bcos.sdk.transaction.model.exception.TransactionBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Autowired
     private ElectricGridMapper electricGridMapper;
 
+    @Autowired
+    private SoildityComponent soildityComponent;
+
     @Override
     public Admin login(LoginDTO adminLoginDTO) {
         Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>().eq("account", adminLoginDTO.getAccount())
@@ -45,11 +51,29 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public void auditGenerateElectric(AuditDTO auditDTO) {
         BaseContext.removeCurrentInfo();
         generateElectricityMapper.update(new UpdateWrapper<GenerateElectricity>().eq("id", auditDTO.getId()).set("status", auditDTO.getStatus()==1?"已通过": "未通过"));
+        GenerateElectricity generateElectricity = generateElectricityMapper.selectOne(new QueryWrapper<GenerateElectricity>().eq("id", auditDTO.getId()));
+        if(auditDTO.getStatus()==1){
+            try {
+                String map_id= soildityComponent.addRecord(generateElectricity.getAccount(),"1",generateElectricity.getConsumption().toString(),auditDTO.getId());
+                generateElectricityMapper.update(new UpdateWrapper<GenerateElectricity>().eq("id", auditDTO.getId()).set("map_id", map_id));
+            } catch (ABICodecException | TransactionBaseException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
     public void auditElectricGrid(AuditDTO auditDTO) {
         BaseContext.removeCurrentInfo();
         electricGridMapper.update(new UpdateWrapper<ElectricGrid>().eq("id", auditDTO.getId()).set("status", auditDTO.getStatus()==1?"已通过": "未通过"));
+        ElectricGrid electricGrid = electricGridMapper.selectOne(new QueryWrapper<ElectricGrid>().eq("id", auditDTO.getId()));
+        if(auditDTO.getStatus()==1){
+            try {
+                String map_id= soildityComponent.addRecord(electricGrid.getAccount(),"2",electricGrid.getConsumption().toString(),auditDTO.getId());
+                electricGridMapper.update(new UpdateWrapper<ElectricGrid>().eq("id", auditDTO.getId()).set("map_id", map_id));
+            } catch (ABICodecException | TransactionBaseException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

@@ -25,11 +25,11 @@ import org.fisco.bcos.sdk.transaction.model.exception.ContractException;
 
 @SuppressWarnings("unchecked")
 public class Table extends Contract {
-    public static final String[] BINARY_ARRAY = {"608060405234801561001057600080fd5b50610442806100206000396000f300608060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806313db93461461007d57806328bb2117146100d457806331afac36146101715780637857d7c91461020e578063bf2b70a114610265578063e8434e3914610322575b600080fd5b34801561008957600080fd5b506100926103eb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100e057600080fd5b5061015b600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103f0565b6040518082815260200191505060405180910390f35b34801561017d57600080fd5b506101f8600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103f8565b6040518082815260200191505060405180910390f35b34801561021a57600080fd5b50610223610400565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561027157600080fd5b5061030c600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610405565b6040518082815260200191505060405180910390f35b34801561032e57600080fd5b506103a9600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061040e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b600090565b600092915050565b600092915050565b600090565b60009392505050565b6000929150505600a165627a7a72305820de09518602a646d700cbe57c54abe72a8eb76f7a27f10dfab2640b9d4244827a0029"};
+    public static final String[] BINARY_ARRAY = {"608060405234801561001057600080fd5b50610442806100206000396000f300608060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806313db93461461007d57806328bb2117146100d457806331afac36146101715780637857d7c91461020e578063bf2b70a114610265578063e8434e3914610322575b600080fd5b34801561008957600080fd5b506100926103eb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100e057600080fd5b5061015b600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103f0565b6040518082815260200191505060405180910390f35b34801561017d57600080fd5b506101f8600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103f8565b6040518082815260200191505060405180910390f35b34801561021a57600080fd5b50610223610400565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561027157600080fd5b5061030c600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610405565b6040518082815260200191505060405180910390f35b34801561032e57600080fd5b506103a9600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061040e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b600090565b600092915050565b600092915050565b600090565b60009392505050565b6000929150505600a165627a7a7230582061657c181ee5edaaeb72a2b558412c3b5f6f0f3534ec313216ea0dc4ea26b0720029"};
 
     public static final String BINARY = org.fisco.bcos.sdk.utils.StringUtils.joinAll("", BINARY_ARRAY);
 
-    public static final String[] SM_BINARY_ARRAY = {"608060405234801561001057600080fd5b50610442806100206000396000f300608060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806309ff42f01461007d5780634c6f30c01461011a5780635887ab24146101b7578063664b37d61461020e578063c74f8caf146102cb578063d8ac595714610322575b600080fd5b34801561008957600080fd5b50610104600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103eb565b6040518082815260200191505060405180910390f35b34801561012657600080fd5b506101a1600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103f3565b6040518082815260200191505060405180910390f35b3480156101c357600080fd5b506101cc6103fb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561021a57600080fd5b506102b5600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610400565b6040518082815260200191505060405180910390f35b3480156102d757600080fd5b506102e0610409565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561032e57600080fd5b506103a9600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061040e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b600092915050565b600092915050565b600090565b60009392505050565b600090565b6000929150505600a165627a7a7230582030a9747a4853ca5b8faf1af1855550b84a290fef2baca7a25693fdeb1473f0440029"};
+    public static final String[] SM_BINARY_ARRAY = {"608060405234801561001057600080fd5b50610442806100206000396000f300608060405260043610610078576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806309ff42f01461007d5780634c6f30c01461011a5780635887ab24146101b7578063664b37d61461020e578063c74f8caf146102cb578063d8ac595714610322575b600080fd5b34801561008957600080fd5b50610104600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103eb565b6040518082815260200191505060405180910390f35b34801561012657600080fd5b506101a1600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506103f3565b6040518082815260200191505060405180910390f35b3480156101c357600080fd5b506101cc6103fb565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561021a57600080fd5b506102b5600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff169060200190929190803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610400565b6040518082815260200191505060405180910390f35b3480156102d757600080fd5b506102e0610409565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561032e57600080fd5b506103a9600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061040e565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b600092915050565b600092915050565b600090565b60009392505050565b600090565b6000929150505600a165627a7a72305820d10f6ed4382a0aac10d3fe48c0d347f2f5535f712321a80a056f071698c72c9b0029"};
 
     public static final String SM_BINARY = org.fisco.bcos.sdk.utils.StringUtils.joinAll("", SM_BINARY_ARRAY);
 
@@ -67,8 +67,8 @@ public class Table extends Contract {
     public TransactionReceipt remove(String param0, String param1) {
         final Function function = new Function(
                 FUNC_REMOVE, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1)),
                 Collections.<TypeReference<?>>emptyList());
         return executeTransaction(function);
     }
@@ -76,8 +76,8 @@ public class Table extends Contract {
     public byte[] remove(String param0, String param1, TransactionCallback callback) {
         final Function function = new Function(
                 FUNC_REMOVE, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1)),
                 Collections.<TypeReference<?>>emptyList());
         return asyncExecuteTransaction(function, callback);
     }
@@ -85,8 +85,8 @@ public class Table extends Contract {
     public String getSignedTransactionForRemove(String param0, String param1) {
         final Function function = new Function(
                 FUNC_REMOVE, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1)),
                 Collections.<TypeReference<?>>emptyList());
         return createSignedTransaction(function);
     }
@@ -119,8 +119,8 @@ public class Table extends Contract {
     public TransactionReceipt insert(String param0, String param1) {
         final Function function = new Function(
                 FUNC_INSERT, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1)),
                 Collections.<TypeReference<?>>emptyList());
         return executeTransaction(function);
     }
@@ -128,8 +128,8 @@ public class Table extends Contract {
     public byte[] insert(String param0, String param1, TransactionCallback callback) {
         final Function function = new Function(
                 FUNC_INSERT, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1)),
                 Collections.<TypeReference<?>>emptyList());
         return asyncExecuteTransaction(function, callback);
     }
@@ -137,8 +137,8 @@ public class Table extends Contract {
     public String getSignedTransactionForInsert(String param0, String param1) {
         final Function function = new Function(
                 FUNC_INSERT, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1)),
                 Collections.<TypeReference<?>>emptyList());
         return createSignedTransaction(function);
     }
@@ -178,9 +178,9 @@ public class Table extends Contract {
     public TransactionReceipt update(String param0, String param1, String param2) {
         final Function function = new Function(
                 FUNC_UPDATE, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param2)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1),
+                new Address(param2)),
                 Collections.<TypeReference<?>>emptyList());
         return executeTransaction(function);
     }
@@ -188,9 +188,9 @@ public class Table extends Contract {
     public byte[] update(String param0, String param1, String param2, TransactionCallback callback) {
         final Function function = new Function(
                 FUNC_UPDATE, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param2)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1),
+                new Address(param2)),
                 Collections.<TypeReference<?>>emptyList());
         return asyncExecuteTransaction(function, callback);
     }
@@ -198,9 +198,9 @@ public class Table extends Contract {
     public String getSignedTransactionForUpdate(String param0, String param1, String param2) {
         final Function function = new Function(
                 FUNC_UPDATE, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param2)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1),
+                new Address(param2)),
                 Collections.<TypeReference<?>>emptyList());
         return createSignedTransaction(function);
     }
@@ -233,8 +233,8 @@ public class Table extends Contract {
 
     public String select(String param0, String param1) throws ContractException {
         final Function function = new Function(FUNC_SELECT, 
-                Arrays.<Type>asList(new org.fisco.bcos.sdk.abi.datatypes.Utf8String(param0), 
-                new org.fisco.bcos.sdk.abi.datatypes.Address(param1)), 
+                Arrays.<Type>asList(new Utf8String(param0),
+                new Address(param1)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
         return executeCallWithSingleValueReturn(function, String.class);
     }

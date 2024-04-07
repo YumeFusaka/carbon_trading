@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.carbon_trading.common.context.BaseContext;
 import com.carbon_trading.common.context.ThreadInfo;
+import com.carbon_trading.component.SoildityComponent;
 import com.carbon_trading.mapper.EnterpriseMapper;
 import com.carbon_trading.mapper.EnterpriseTradeMapping;
 import com.carbon_trading.pojo.DTO.EnterpriseTradeDTO;
@@ -14,6 +15,8 @@ import com.carbon_trading.pojo.Entity.Trade;
 import com.carbon_trading.pojo.VO.TradeVO;
 import com.carbon_trading.service.EnterpriseTradeService;
 import lombok.extern.slf4j.Slf4j;
+import org.fisco.bcos.sdk.abi.ABICodecException;
+import org.fisco.bcos.sdk.transaction.model.exception.TransactionBaseException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
 
     @Autowired
     private EnterpriseMapper enterpriseMapper;
+
+    @Autowired
+    private SoildityComponent soildityComponent;
 
     @Override
     public void trade(EnterpriseTradeDTO enterpriseTradeDTO) {
@@ -72,10 +78,19 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
     public void handleTrade(HandleTradeDTO handleTradeDTO) {
         ThreadInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
+        Trade trade = enterpriseTradeMapping.selectOne(new QueryWrapper<Trade>().eq("id", handleTradeDTO.getTrade_id()));
         UpdateWrapper<Trade> wrapper = new UpdateWrapper<>();
         wrapper.eq("id", handleTradeDTO.getTrade_id())
                 .eq("receiver_account",currentInfo.getAccount())
                 .set("status",handleTradeDTO.getStatus()==1?"已接受":"已拒绝");
+        if(handleTradeDTO.getStatus()==1){
+            try {
+                String map_id = soildityComponent.addRecord(trade.getInitiator_account(),"0",trade.getPay_coin().toString(),handleTradeDTO.getTrade_id());
+                wrapper.set("map_id",map_id);
+            } catch (ABICodecException | TransactionBaseException e) {
+                throw new RuntimeException(e);
+            }
+        }
         enterpriseTradeMapping.update(wrapper);
     }
 }

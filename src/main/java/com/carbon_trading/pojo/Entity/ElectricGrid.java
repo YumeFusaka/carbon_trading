@@ -59,4 +59,7 @@ public class ElectricGrid implements Serializable {
 
     @TableField("name")
     private String name;
+
+    @TableField("map_id")
+    private String map_id;
 }

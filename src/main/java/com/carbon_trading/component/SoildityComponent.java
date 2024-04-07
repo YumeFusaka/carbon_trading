@@ -1,11 +1,14 @@
 package com.carbon_trading.component;
 
+import com.carbon_trading.pojo.Entity.Carbon_trading;
+import lombok.extern.slf4j.Slf4j;
 import org.fisco.bcos.sdk.BcosSDK;
 import org.fisco.bcos.sdk.abi.ABICodecException;
 import org.fisco.bcos.sdk.client.Client;
 import org.fisco.bcos.sdk.crypto.keypair.CryptoKeyPair;
 import org.fisco.bcos.sdk.transaction.manager.AssembleTransactionProcessor;
 import org.fisco.bcos.sdk.transaction.manager.TransactionProcessorFactory;
+import org.fisco.bcos.sdk.transaction.model.dto.CallResponse;
 import org.fisco.bcos.sdk.transaction.model.dto.TransactionResponse;
 import org.fisco.bcos.sdk.transaction.model.exception.TransactionBaseException;
 import org.springframework.stereotype.Component;
@@ -14,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Slf4j
 public class SoildityComponent {
 
     public static final String configFile = "src/main/resources/config-fisco.toml";
 
-    private String contractAddress = "0x4c8456b637d4bfa74b8a45d0a60e106e7a466b54";
+    private String contractAddress = "0x6b32dc8c4313041c7c66de289be5f42295a47a81";
 
     private AssembleTransactionProcessor transactionProcessor;
 
@@ -35,14 +39,33 @@ public class SoildityComponent {
 
     }
 
-    public void addRecord(String account,String type_id,String consume,String map_id) throws ABICodecException, TransactionBaseException {
+    public String addRecord(String account,String type_id,String consume,String id) throws ABICodecException, TransactionBaseException {
         List<Object> params = new ArrayList<>();
         params.add(account);
         params.add(type_id);
         params.add(consume);
-        params.add(map_id);
+        params.add(id);
         TransactionResponse transactionResponse =
                 transactionProcessor.sendTransactionAndGetResponseByContractLoader("Carbon_trading", contractAddress, "addRecord", params);
+        List<Object> valuesList = transactionResponse.getValuesList();
+        log.info("区块链发起交易成功返回map_id为:{}", valuesList.get(1).toString());
+        return valuesList.get(1).toString();
+    }
+
+    public Carbon_trading getRecord(String map_id) throws ABICodecException, TransactionBaseException {
+        List<Object> params = new ArrayList<>();
+        params.add(map_id);
+        CallResponse callResponse =
+                transactionProcessor.sendCallByContractLoader("Carbon_trading", contractAddress, "getRecord", params);
+        List<Object> valuesList = callResponse.getReturnObject();
+        log.info("返回交易信息为:{}",valuesList);
+        Carbon_trading carbon_trading = Carbon_trading.builder()
+                .account(valuesList.get(0).toString())
+                .type_id(valuesList.get(1).toString())
+                .consume(valuesList.get(2).toString())
+                .map_id(valuesList.get(3).toString())
+                .build();
+        return  carbon_trading;
     }
 
 
