@@ -59,11 +59,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             Claims claims = JwtUtils.parseToken(jwtProperties.getSecretKey(), token);
             ThreadInfo threadInfo = new ThreadInfo();
             threadInfo.setIdentity((String) claims.get("identity"));
-            if(threadInfo.getIdentity().equals("enterprise")){
+            if (threadInfo.getIdentity().equals("enterprise")) {
                 threadInfo.setType((String) claims.get("type"));
             }
             threadInfo.setAccount((String) claims.get("account"));
-            threadInfo.setName((String)claims.get("name"));
+            threadInfo.setName((String) claims.get("name"));
             BaseContext.setCurrentInfo(threadInfo);
         } catch (Exception e) {
             log.info("令牌解析失败!");

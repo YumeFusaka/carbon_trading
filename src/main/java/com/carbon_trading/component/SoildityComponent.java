@@ -39,7 +39,7 @@ public class SoildityComponent {
 
     }
 
-    public String addRecord(String account,String type_id,String consume,String id) throws ABICodecException, TransactionBaseException {
+    public String addRecord(String account, String type_id, String consume, String id) throws ABICodecException, TransactionBaseException {
         List<Object> params = new ArrayList<>();
         params.add(account);
         params.add(type_id);
@@ -58,16 +58,15 @@ public class SoildityComponent {
         CallResponse callResponse =
                 transactionProcessor.sendCallByContractLoader("Carbon_trading", contractAddress, "getRecord", params);
         List<Object> valuesList = callResponse.getReturnObject();
-        log.info("返回交易信息为:{}",valuesList);
+        log.info("返回交易信息为:{}", valuesList);
         Carbon_trading carbon_trading = Carbon_trading.builder()
                 .account(valuesList.get(0).toString())
                 .type_id(valuesList.get(1).toString())
                 .consume(valuesList.get(2).toString())
                 .map_id(valuesList.get(3).toString())
                 .build();
-        return  carbon_trading;
+        return carbon_trading;
     }
-
 
 
 }

@@ -3,8 +3,8 @@ package com.carbon_trading.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.carbon_trading.mapper.EnterpriseMapper;
-import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.DTO.EnterpriseRegisterDTO;
+import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.service.EnterpriseService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class EnterpriseServiceImpl extends ServiceImpl<EnterpriseMapper, Enterpr
     public void register(EnterpriseRegisterDTO enterpriseRegisterDTO) {
         Enterprise enterprise = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", enterpriseRegisterDTO.getAccount())
                 .eq("password", enterpriseRegisterDTO.getPassword()));
-        if(enterprise != null){
+        if (enterprise != null) {
             throw new RuntimeException("该账号已被注册");
         }
         enterprise = new Enterprise();

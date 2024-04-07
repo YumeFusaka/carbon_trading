@@ -1,6 +1,5 @@
 package com.carbon_trading.common.context;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

@@ -43,7 +43,7 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
         ThreadInfo currentInfo = BaseContext.getCurrentInfo();
         BaseContext.removeCurrentInfo();
         Enterprise enterprise = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("id", enterpriseTradeDTO.getReceiver_id()));
-        String receiverAccount= enterprise.getAccount();
+        String receiverAccount = enterprise.getAccount();
         String receiverName = enterprise.getName();
         Trade trade = new Trade();
         trade.setInitiator_account(currentInfo.getAccount());
@@ -66,7 +66,7 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
                 .eq("receiver_account", currentInfo.getAccount());
         List<Trade> trades = enterpriseTradeMapping.selectList(wrapper);
         ArrayList<TradeVO> tradeVOS = new ArrayList<>();
-        for(Trade trade : trades){
+        for (Trade trade : trades) {
             TradeVO tradeVO = new TradeVO();
             BeanUtils.copyProperties(trade, tradeVO);
             tradeVOS.add(tradeVO);
@@ -81,12 +81,12 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
         Trade trade = enterpriseTradeMapping.selectOne(new QueryWrapper<Trade>().eq("id", handleTradeDTO.getTrade_id()));
         UpdateWrapper<Trade> wrapper = new UpdateWrapper<>();
         wrapper.eq("id", handleTradeDTO.getTrade_id())
-                .eq("receiver_account",currentInfo.getAccount())
-                .set("status",handleTradeDTO.getStatus()==1?"已接受":"已拒绝");
-        if(handleTradeDTO.getStatus()==1){
+                .eq("receiver_account", currentInfo.getAccount())
+                .set("status", handleTradeDTO.getStatus() == 1 ? "已接受" : "已拒绝");
+        if (handleTradeDTO.getStatus() == 1) {
             try {
-                String map_id = soildityComponent.addRecord(trade.getInitiator_account(),"0",trade.getPay_coin().toString(),handleTradeDTO.getTrade_id());
-                wrapper.set("map_id",map_id);
+                String map_id = soildityComponent.addRecord(trade.getInitiator_account(), "0", trade.getPay_coin().toString(), handleTradeDTO.getTrade_id());
+                wrapper.set("map_id", map_id);
             } catch (ABICodecException | TransactionBaseException e) {
                 throw new RuntimeException(e);
             }

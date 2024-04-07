@@ -23,7 +23,7 @@ public class AgencyServiceImpl extends ServiceImpl<AgencyMapper, Agency> impleme
     public void register(AgencyRegisterDTO agencyRegisterDTO) {
         Agency agency = agencyMapper.selectOne(new QueryWrapper<Agency>().eq("account", agencyRegisterDTO.getAccount())
                 .eq("password", agencyRegisterDTO.getPassword()));
-        if(agency != null){
+        if (agency != null) {
             throw new RuntimeException("该账号已被注册");
         }
         agency = new Agency();

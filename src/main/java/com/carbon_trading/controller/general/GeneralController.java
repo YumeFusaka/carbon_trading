@@ -33,19 +33,19 @@ public class GeneralController {
 
     @GetMapping("/trade/list")
     @Operation(summary = "获取所有交易信息")
-    public Result<ArrayList<TradeVO>> getTrades(){
+    public Result<ArrayList<TradeVO>> getTrades() {
         return Result.success(generalService.getTrades());
     }
 
     @GetMapping("/generateElectricity/list")
     @Operation(summary = "获取所有发电信息")
-    public Result<ArrayList<GenerateElectricityVO>> generateElectricityList(){
+    public Result<ArrayList<GenerateElectricityVO>> generateElectricityList() {
         return Result.success(generalService.generateElectricityList());
     }
 
     @GetMapping("/electricGrid/list")
     @Operation(summary = "获取所有电网信息")
-    public Result<ArrayList<ElectricGridVO>> electricGridList(){
+    public Result<ArrayList<ElectricGridVO>> electricGridList() {
         return Result.success(generalService.electricGridList());
     }
 }
