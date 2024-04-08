@@ -12,7 +12,6 @@ import com.carbon_trading.pojo.Entity.GenerateElectricity;
 import com.carbon_trading.pojo.Entity.Trade;
 import com.carbon_trading.pojo.VO.ElectricGridVO;
 import com.carbon_trading.pojo.VO.EnterpriseVO;
-
 import com.carbon_trading.pojo.VO.GenerateElectricityVO;
 import com.carbon_trading.pojo.VO.TradeVO;
 import com.carbon_trading.service.GeneralService;
@@ -45,9 +44,9 @@ public class GeneralServiceImpl implements GeneralService {
         BaseContext.removeCurrentInfo();
         List<Enterprise> enterprises = enterpriseMapper.selectList(new QueryWrapper<Enterprise>());
         ArrayList<EnterpriseVO> enterpriseVOS = new ArrayList<>();
-        for(Enterprise enterprise : enterprises){
+        for (Enterprise enterprise : enterprises) {
             EnterpriseVO enterpriseVO = new EnterpriseVO();
-            BeanUtils.copyProperties(enterprise,enterpriseVO);
+            BeanUtils.copyProperties(enterprise, enterpriseVO);
             enterpriseVOS.add(enterpriseVO);
         }
         return enterpriseVOS;
@@ -58,9 +57,9 @@ public class GeneralServiceImpl implements GeneralService {
         BaseContext.removeCurrentInfo();
         List<Trade> trades = enterpriseTradeMapping.selectList(new QueryWrapper<Trade>());
         ArrayList<TradeVO> tradeVOS = new ArrayList<>();
-        for(Trade trade : trades){
+        for (Trade trade : trades) {
             TradeVO tradeVO = new TradeVO();
-            BeanUtils.copyProperties(trade,tradeVO);
+            BeanUtils.copyProperties(trade, tradeVO);
             tradeVOS.add(tradeVO);
         }
         return tradeVOS;
@@ -71,9 +70,9 @@ public class GeneralServiceImpl implements GeneralService {
         BaseContext.removeCurrentInfo();
         List<GenerateElectricity> generateElectricities = generateElectricityMapper.selectList(new QueryWrapper<GenerateElectricity>());
         ArrayList<GenerateElectricityVO> generateElectricityVOS = new ArrayList<>();
-        for(GenerateElectricity generateElectricity : generateElectricities){
+        for (GenerateElectricity generateElectricity : generateElectricities) {
             GenerateElectricityVO generateElectricityVO = new GenerateElectricityVO();
-            BeanUtils.copyProperties(generateElectricity,generateElectricityVO);
+            BeanUtils.copyProperties(generateElectricity, generateElectricityVO);
             generateElectricityVOS.add(generateElectricityVO);
         }
         return generateElectricityVOS;
@@ -83,9 +82,9 @@ public class GeneralServiceImpl implements GeneralService {
     public ArrayList<ElectricGridVO> electricGridList() {
         List<ElectricGrid> electricGrids = electricGridMapper.selectList(new QueryWrapper<ElectricGrid>());
         ArrayList<ElectricGridVO> electricGridVOS = new ArrayList<>();
-        for(ElectricGrid electricGrid : electricGrids){
+        for (ElectricGrid electricGrid : electricGrids) {
             ElectricGridVO electricGridVO = new ElectricGridVO();
-            BeanUtils.copyProperties(electricGrid,electricGridVO);
+            BeanUtils.copyProperties(electricGrid, electricGridVO);
             electricGridVOS.add(electricGridVO);
         }
         return electricGridVOS;

@@ -1,9 +1,5 @@
 package com.carbon_trading.fisco;
 
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import org.fisco.bcos.sdk.abi.FunctionReturnDecoder;
 import org.fisco.bcos.sdk.abi.TypeReference;
 import org.fisco.bcos.sdk.abi.datatypes.Address;
@@ -22,6 +18,11 @@ import org.fisco.bcos.sdk.model.CryptoType;
 import org.fisco.bcos.sdk.model.TransactionReceipt;
 import org.fisco.bcos.sdk.model.callback.TransactionCallback;
 import org.fisco.bcos.sdk.transaction.model.exception.ContractException;
+
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class Table extends Contract {
@@ -57,193 +58,206 @@ public class Table extends Contract {
         return (cryptoSuite.getCryptoTypeConfig() == CryptoType.ECDSA_TYPE ? BINARY : SM_BINARY);
     }
 
-    public String newEntry() throws ContractException {
-        final Function function = new Function(FUNC_NEWENTRY, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
-        return executeCallWithSingleValueReturn(function, String.class);
-    }
-
-    public TransactionReceipt remove(String param0, String param1) {
-        final Function function = new Function(
-                FUNC_REMOVE, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1)),
-                Collections.<TypeReference<?>>emptyList());
-        return executeTransaction(function);
-    }
-
-    public byte[] remove(String param0, String param1, TransactionCallback callback) {
-        final Function function = new Function(
-                FUNC_REMOVE, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1)),
-                Collections.<TypeReference<?>>emptyList());
-        return asyncExecuteTransaction(function, callback);
-    }
-
-    public String getSignedTransactionForRemove(String param0, String param1) {
-        final Function function = new Function(
-                FUNC_REMOVE, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1)),
-                Collections.<TypeReference<?>>emptyList());
-        return createSignedTransaction(function);
-    }
-
-    public Tuple2<String, String> getRemoveInput(TransactionReceipt transactionReceipt) {
-        String data = transactionReceipt.getInput().substring(10);
-        final Function function = new Function(FUNC_REMOVE, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {}, new TypeReference<Address>() {}));
-        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
-        return new Tuple2<String, String>(
-
-                (String) results.get(0).getValue(), 
-                (String) results.get(1).getValue()
-                );
-    }
-
-    public Tuple1<BigInteger> getRemoveOutput(TransactionReceipt transactionReceipt) {
-        String data = transactionReceipt.getOutput();
-        final Function function = new Function(FUNC_REMOVE, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Int256>() {}));
-        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
-        return new Tuple1<BigInteger>(
-
-                (BigInteger) results.get(0).getValue()
-                );
-    }
-
-    public TransactionReceipt insert(String param0, String param1) {
-        final Function function = new Function(
-                FUNC_INSERT, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1)),
-                Collections.<TypeReference<?>>emptyList());
-        return executeTransaction(function);
-    }
-
-    public byte[] insert(String param0, String param1, TransactionCallback callback) {
-        final Function function = new Function(
-                FUNC_INSERT, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1)),
-                Collections.<TypeReference<?>>emptyList());
-        return asyncExecuteTransaction(function, callback);
-    }
-
-    public String getSignedTransactionForInsert(String param0, String param1) {
-        final Function function = new Function(
-                FUNC_INSERT, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1)),
-                Collections.<TypeReference<?>>emptyList());
-        return createSignedTransaction(function);
-    }
-
-    public Tuple2<String, String> getInsertInput(TransactionReceipt transactionReceipt) {
-        String data = transactionReceipt.getInput().substring(10);
-        final Function function = new Function(FUNC_INSERT, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {}, new TypeReference<Address>() {}));
-        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
-        return new Tuple2<String, String>(
-
-                (String) results.get(0).getValue(), 
-                (String) results.get(1).getValue()
-                );
-    }
-
-    public Tuple1<BigInteger> getInsertOutput(TransactionReceipt transactionReceipt) {
-        String data = transactionReceipt.getOutput();
-        final Function function = new Function(FUNC_INSERT, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Int256>() {}));
-        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
-        return new Tuple1<BigInteger>(
-
-                (BigInteger) results.get(0).getValue()
-                );
-    }
-
-    public String newCondition() throws ContractException {
-        final Function function = new Function(FUNC_NEWCONDITION, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
-        return executeCallWithSingleValueReturn(function, String.class);
-    }
-
-    public TransactionReceipt update(String param0, String param1, String param2) {
-        final Function function = new Function(
-                FUNC_UPDATE, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1),
-                new Address(param2)),
-                Collections.<TypeReference<?>>emptyList());
-        return executeTransaction(function);
-    }
-
-    public byte[] update(String param0, String param1, String param2, TransactionCallback callback) {
-        final Function function = new Function(
-                FUNC_UPDATE, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1),
-                new Address(param2)),
-                Collections.<TypeReference<?>>emptyList());
-        return asyncExecuteTransaction(function, callback);
-    }
-
-    public String getSignedTransactionForUpdate(String param0, String param1, String param2) {
-        final Function function = new Function(
-                FUNC_UPDATE, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1),
-                new Address(param2)),
-                Collections.<TypeReference<?>>emptyList());
-        return createSignedTransaction(function);
-    }
-
-    public Tuple3<String, String, String> getUpdateInput(TransactionReceipt transactionReceipt) {
-        String data = transactionReceipt.getInput().substring(10);
-        final Function function = new Function(FUNC_UPDATE, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {}, new TypeReference<Address>() {}, new TypeReference<Address>() {}));
-        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
-        return new Tuple3<String, String, String>(
-
-                (String) results.get(0).getValue(), 
-                (String) results.get(1).getValue(), 
-                (String) results.get(2).getValue()
-                );
-    }
-
-    public Tuple1<BigInteger> getUpdateOutput(TransactionReceipt transactionReceipt) {
-        String data = transactionReceipt.getOutput();
-        final Function function = new Function(FUNC_UPDATE, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Int256>() {}));
-        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
-        return new Tuple1<BigInteger>(
-
-                (BigInteger) results.get(0).getValue()
-                );
-    }
-
-    public String select(String param0, String param1) throws ContractException {
-        final Function function = new Function(FUNC_SELECT, 
-                Arrays.<Type>asList(new Utf8String(param0),
-                new Address(param1)),
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
-        return executeCallWithSingleValueReturn(function, String.class);
-    }
-
     public static Table load(String contractAddress, Client client, CryptoKeyPair credential) {
         return new Table(contractAddress, client, credential);
     }
 
     public static Table deploy(Client client, CryptoKeyPair credential) throws ContractException {
         return deploy(Table.class, client, credential, getBinary(client.getCryptoSuite()), "");
+    }
+
+    public String newEntry() throws ContractException {
+        final Function function = new Function(FUNC_NEWENTRY,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {
+                }));
+        return executeCallWithSingleValueReturn(function, String.class);
+    }
+
+    public TransactionReceipt remove(String param0, String param1) {
+        final Function function = new Function(
+                FUNC_REMOVE,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1)),
+                Collections.<TypeReference<?>>emptyList());
+        return executeTransaction(function);
+    }
+
+    public byte[] remove(String param0, String param1, TransactionCallback callback) {
+        final Function function = new Function(
+                FUNC_REMOVE,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1)),
+                Collections.<TypeReference<?>>emptyList());
+        return asyncExecuteTransaction(function, callback);
+    }
+
+    public String getSignedTransactionForRemove(String param0, String param1) {
+        final Function function = new Function(
+                FUNC_REMOVE,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1)),
+                Collections.<TypeReference<?>>emptyList());
+        return createSignedTransaction(function);
+    }
+
+    public Tuple2<String, String> getRemoveInput(TransactionReceipt transactionReceipt) {
+        String data = transactionReceipt.getInput().substring(10);
+        final Function function = new Function(FUNC_REMOVE,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {
+                }, new TypeReference<Address>() {
+                }));
+        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
+        return new Tuple2<String, String>(
+
+                (String) results.get(0).getValue(),
+                (String) results.get(1).getValue()
+        );
+    }
+
+    public Tuple1<BigInteger> getRemoveOutput(TransactionReceipt transactionReceipt) {
+        String data = transactionReceipt.getOutput();
+        final Function function = new Function(FUNC_REMOVE,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Int256>() {
+                }));
+        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
+        return new Tuple1<BigInteger>(
+
+                (BigInteger) results.get(0).getValue()
+        );
+    }
+
+    public TransactionReceipt insert(String param0, String param1) {
+        final Function function = new Function(
+                FUNC_INSERT,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1)),
+                Collections.<TypeReference<?>>emptyList());
+        return executeTransaction(function);
+    }
+
+    public byte[] insert(String param0, String param1, TransactionCallback callback) {
+        final Function function = new Function(
+                FUNC_INSERT,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1)),
+                Collections.<TypeReference<?>>emptyList());
+        return asyncExecuteTransaction(function, callback);
+    }
+
+    public String getSignedTransactionForInsert(String param0, String param1) {
+        final Function function = new Function(
+                FUNC_INSERT,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1)),
+                Collections.<TypeReference<?>>emptyList());
+        return createSignedTransaction(function);
+    }
+
+    public Tuple2<String, String> getInsertInput(TransactionReceipt transactionReceipt) {
+        String data = transactionReceipt.getInput().substring(10);
+        final Function function = new Function(FUNC_INSERT,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {
+                }, new TypeReference<Address>() {
+                }));
+        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
+        return new Tuple2<String, String>(
+
+                (String) results.get(0).getValue(),
+                (String) results.get(1).getValue()
+        );
+    }
+
+    public Tuple1<BigInteger> getInsertOutput(TransactionReceipt transactionReceipt) {
+        String data = transactionReceipt.getOutput();
+        final Function function = new Function(FUNC_INSERT,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Int256>() {
+                }));
+        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
+        return new Tuple1<BigInteger>(
+
+                (BigInteger) results.get(0).getValue()
+        );
+    }
+
+    public String newCondition() throws ContractException {
+        final Function function = new Function(FUNC_NEWCONDITION,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {
+                }));
+        return executeCallWithSingleValueReturn(function, String.class);
+    }
+
+    public TransactionReceipt update(String param0, String param1, String param2) {
+        final Function function = new Function(
+                FUNC_UPDATE,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1),
+                        new Address(param2)),
+                Collections.<TypeReference<?>>emptyList());
+        return executeTransaction(function);
+    }
+
+    public byte[] update(String param0, String param1, String param2, TransactionCallback callback) {
+        final Function function = new Function(
+                FUNC_UPDATE,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1),
+                        new Address(param2)),
+                Collections.<TypeReference<?>>emptyList());
+        return asyncExecuteTransaction(function, callback);
+    }
+
+    public String getSignedTransactionForUpdate(String param0, String param1, String param2) {
+        final Function function = new Function(
+                FUNC_UPDATE,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1),
+                        new Address(param2)),
+                Collections.<TypeReference<?>>emptyList());
+        return createSignedTransaction(function);
+    }
+
+    public Tuple3<String, String, String> getUpdateInput(TransactionReceipt transactionReceipt) {
+        String data = transactionReceipt.getInput().substring(10);
+        final Function function = new Function(FUNC_UPDATE,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Utf8String>() {
+                }, new TypeReference<Address>() {
+                }, new TypeReference<Address>() {
+                }));
+        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
+        return new Tuple3<String, String, String>(
+
+                (String) results.get(0).getValue(),
+                (String) results.get(1).getValue(),
+                (String) results.get(2).getValue()
+        );
+    }
+
+    public Tuple1<BigInteger> getUpdateOutput(TransactionReceipt transactionReceipt) {
+        String data = transactionReceipt.getOutput();
+        final Function function = new Function(FUNC_UPDATE,
+                Arrays.<Type>asList(),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Int256>() {
+                }));
+        List<Type> results = FunctionReturnDecoder.decode(data, function.getOutputParameters());
+        return new Tuple1<BigInteger>(
+
+                (BigInteger) results.get(0).getValue()
+        );
+    }
+
+    public String select(String param0, String param1) throws ContractException {
+        final Function function = new Function(FUNC_SELECT,
+                Arrays.<Type>asList(new Utf8String(param0),
+                        new Address(param1)),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {
+                }));
+        return executeCallWithSingleValueReturn(function, String.class);
     }
 }

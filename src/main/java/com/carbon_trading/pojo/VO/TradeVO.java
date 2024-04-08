@@ -1,6 +1,5 @@
 package com.carbon_trading.pojo.VO;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

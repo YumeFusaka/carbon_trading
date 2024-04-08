@@ -20,12 +20,12 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequestMapping("/agency")
-@Tag(name="机构相关接口")
+@Tag(name = "机构相关接口")
 public class AgencyController {
 
     @Autowired
     private AgencyService agencyService;
-    
+
     @Autowired
     private JwtProperties jwtProperties;
 
@@ -37,8 +37,8 @@ public class AgencyController {
 
     @PostMapping("/register")
     @Operation(summary = "注册")
-    public Result register(@RequestBody AgencyRegisterDTO agencyRegisterDTO){
-        log.info("公司注册:{}",agencyRegisterDTO);
+    public Result register(@RequestBody AgencyRegisterDTO agencyRegisterDTO) {
+        log.info("公司注册:{}", agencyRegisterDTO);
         agencyService.register(agencyRegisterDTO);
         return Result.success();
     }
@@ -48,12 +48,12 @@ public class AgencyController {
     public Result<LoginVO> login(@RequestBody LoginDTO agencyLoginDTO) {
         log.info("公司登录:{}", agencyLoginDTO);
         Agency agency = agencyService.login(agencyLoginDTO);
-        Map<String,Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("identity", "agency");
-        claims.put("account",agency.getAccount());
-        claims.put("name",agency.getName());
-        String token = JwtUtils.createToken(jwtProperties.getSecretKey(),jwtProperties.getTtl(),claims);
-        log.info("返回token:{}",token);
+        claims.put("account", agency.getAccount());
+        claims.put("name", agency.getName());
+        String token = JwtUtils.createToken(jwtProperties.getSecretKey(), jwtProperties.getTtl(), claims);
+        log.info("返回token:{}", token);
         return Result.success(LoginVO.builder()
                 .Authorization(token)
                 .build());

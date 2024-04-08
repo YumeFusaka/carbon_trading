@@ -57,8 +57,8 @@ public class EnterpriseController {
 
     @PostMapping("/register")
     @Operation(summary = "注册")
-    public Result register(@RequestBody EnterpriseRegisterDTO enterpriseRegisterDTO){
-        log.info("公司注册:{}",enterpriseRegisterDTO);
+    public Result register(@RequestBody EnterpriseRegisterDTO enterpriseRegisterDTO) {
+        log.info("公司注册:{}", enterpriseRegisterDTO);
         enterpriseService.register(enterpriseRegisterDTO);
         return Result.success();
     }
@@ -68,13 +68,13 @@ public class EnterpriseController {
     public Result<LoginVO> login(@RequestBody LoginDTO enterpriseLoginDTO) {
         log.info("公司登录:{}", enterpriseLoginDTO);
         Enterprise enterprise = enterpriseService.login(enterpriseLoginDTO);
-        Map<String,Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("identity", "enterprise");
-        claims.put("type",enterprise.getType());
-        claims.put("account",enterprise.getAccount());
-        claims.put("name",enterprise.getName());
-        String token = JwtUtils.createToken(jwtProperties.getSecretKey(),jwtProperties.getTtl(),claims);
-        log.info("返回token:{}",token);
+        claims.put("type", enterprise.getType());
+        claims.put("account", enterprise.getAccount());
+        claims.put("name", enterprise.getName());
+        String token = JwtUtils.createToken(jwtProperties.getSecretKey(), jwtProperties.getTtl(), claims);
+        log.info("返回token:{}", token);
         return Result.success(LoginVO.builder()
                 .Authorization(token)
                 .type(enterprise.getType())
@@ -102,7 +102,7 @@ public class EnterpriseController {
     public Result<ArrayList<GenerateElectricityVO>> getGenerateElectricityHistory() {
         List<GenerateElectricity> generateElectricities = generateElectricityService.queryHistory();
         ArrayList<GenerateElectricityVO> generateElectricityVOS = new ArrayList<>();
-        for (GenerateElectricity generateElectricity : generateElectricities){
+        for (GenerateElectricity generateElectricity : generateElectricities) {
             GenerateElectricityVO generateElectricityVO = new GenerateElectricityVO();
             BeanUtils.copyProperties(generateElectricity, generateElectricityVO);
             generateElectricityVOS.add(generateElectricityVO);
@@ -115,7 +115,7 @@ public class EnterpriseController {
     public Result<ArrayList<ElectricGridVO>> getElectricityGridHistory() {
         List<ElectricGrid> electricGrids = electricGridService.queryHistory();
         ArrayList<ElectricGridVO> electricGridVOS = new ArrayList<>();
-        for (ElectricGrid electricGrid : electricGrids){
+        for (ElectricGrid electricGrid : electricGrids) {
             ElectricGridVO electricGridVO = new ElectricGridVO();
             BeanUtils.copyProperties(electricGrid, electricGridVO);
             electricGridVOS.add(electricGridVO);
@@ -126,7 +126,7 @@ public class EnterpriseController {
     @PostMapping("/trade")
     @Operation(summary = "交易")
     public Result trade(@RequestBody EnterpriseTradeDTO enterpriseTradeDTO) {
-        log.info("发起交易:{}",enterpriseTradeDTO);
+        log.info("发起交易:{}", enterpriseTradeDTO);
         enterpriseTradeService.trade(enterpriseTradeDTO);
         return Result.success();
     }

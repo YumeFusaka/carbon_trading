@@ -5,7 +5,6 @@ import com.carbon_trading.common.result.Result;
 import com.carbon_trading.pojo.DTO.AuditDTO;
 import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.Entity.Admin;
-import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.VO.LoginVO;
 import com.carbon_trading.service.AdminService;
 import com.carbon_trading.utils.JwtUtils;
@@ -41,12 +40,12 @@ public class AdminController {
     public Result<LoginVO> login(@RequestBody LoginDTO adminLoginDTO) {
         log.info("公司登录:{}", adminLoginDTO);
         Admin admin = adminService.login(adminLoginDTO);
-        Map<String,Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("identity", "admin");
-        claims.put("account",admin.getAccount());
-        claims.put("name",admin.getName());
-        String token = JwtUtils.createToken(jwtProperties.getSecretKey(),jwtProperties.getTtl(),claims);
-        log.info("返回token:{}",token);
+        claims.put("account", admin.getAccount());
+        claims.put("name", admin.getName());
+        String token = JwtUtils.createToken(jwtProperties.getSecretKey(), jwtProperties.getTtl(), claims);
+        log.info("返回token:{}", token);
         return Result.success(LoginVO.builder()
                 .Authorization(token)
                 .build());

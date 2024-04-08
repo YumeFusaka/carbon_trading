@@ -7,7 +7,7 @@ import com.carbon_trading.pojo.VO.TradeVO;
 
 import java.util.ArrayList;
 
-public interface  GeneralService {
+public interface GeneralService {
     ArrayList<EnterpriseVO> getEnterprises();
 
     ArrayList<TradeVO> getTrades();

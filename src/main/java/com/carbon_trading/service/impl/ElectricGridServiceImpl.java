@@ -7,8 +7,6 @@ import com.carbon_trading.common.context.ThreadInfo;
 import com.carbon_trading.mapper.ElectricGridMapper;
 import com.carbon_trading.pojo.DTO.ElectricGridDTO;
 import com.carbon_trading.pojo.Entity.ElectricGrid;
-import com.carbon_trading.pojo.Entity.ElectricGrid;
-import com.carbon_trading.pojo.Entity.GenerateElectricity;
 import com.carbon_trading.service.ElectricGridService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

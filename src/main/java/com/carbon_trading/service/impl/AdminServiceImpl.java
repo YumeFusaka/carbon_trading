@@ -50,11 +50,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public void auditGenerateElectric(AuditDTO auditDTO) {
         BaseContext.removeCurrentInfo();
-        generateElectricityMapper.update(new UpdateWrapper<GenerateElectricity>().eq("id", auditDTO.getId()).set("status", auditDTO.getStatus()==1?"已通过": "未通过"));
+        generateElectricityMapper.update(new UpdateWrapper<GenerateElectricity>().eq("id", auditDTO.getId()).set("status", auditDTO.getStatus() == 1 ? "已通过" : "未通过"));
         GenerateElectricity generateElectricity = generateElectricityMapper.selectOne(new QueryWrapper<GenerateElectricity>().eq("id", auditDTO.getId()));
-        if(auditDTO.getStatus()==1){
+        if (auditDTO.getStatus() == 1) {
             try {
-                String map_id= soildityComponent.addRecord(generateElectricity.getAccount(),"1",generateElectricity.getConsumption().toString(),auditDTO.getId());
+                String map_id = soildityComponent.addRecord(generateElectricity.getAccount(), "1", generateElectricity.getConsumption().toString(), auditDTO.getId());
                 generateElectricityMapper.update(new UpdateWrapper<GenerateElectricity>().eq("id", auditDTO.getId()).set("map_id", map_id));
             } catch (ABICodecException | TransactionBaseException e) {
                 throw new RuntimeException(e);
@@ -65,11 +65,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public void auditElectricGrid(AuditDTO auditDTO) {
         BaseContext.removeCurrentInfo();
-        electricGridMapper.update(new UpdateWrapper<ElectricGrid>().eq("id", auditDTO.getId()).set("status", auditDTO.getStatus()==1?"已通过": "未通过"));
+        electricGridMapper.update(new UpdateWrapper<ElectricGrid>().eq("id", auditDTO.getId()).set("status", auditDTO.getStatus() == 1 ? "已通过" : "未通过"));
         ElectricGrid electricGrid = electricGridMapper.selectOne(new QueryWrapper<ElectricGrid>().eq("id", auditDTO.getId()));
-        if(auditDTO.getStatus()==1){
+        if (auditDTO.getStatus() == 1) {
             try {
-                String map_id= soildityComponent.addRecord(electricGrid.getAccount(),"2",electricGrid.getConsumption().toString(),auditDTO.getId());
+                String map_id = soildityComponent.addRecord(electricGrid.getAccount(), "2", electricGrid.getConsumption().toString(), auditDTO.getId());
                 electricGridMapper.update(new UpdateWrapper<ElectricGrid>().eq("id", auditDTO.getId()).set("map_id", map_id));
             } catch (ABICodecException | TransactionBaseException e) {
                 throw new RuntimeException(e);
