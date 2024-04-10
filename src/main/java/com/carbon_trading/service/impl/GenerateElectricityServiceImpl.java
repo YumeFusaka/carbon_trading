@@ -1,11 +1,15 @@
 package com.carbon_trading.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.carbon_trading.common.context.BaseContext;
 import com.carbon_trading.common.context.ThreadInfo;
+import com.carbon_trading.component.CountComponent;
+import com.carbon_trading.mapper.EnterpriseMapper;
 import com.carbon_trading.mapper.GenerateElectricityMapper;
 import com.carbon_trading.pojo.DTO.GenerateElectricityDTO;
+import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.Entity.GenerateElectricity;
 import com.carbon_trading.service.GenerateElectricityService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +27,12 @@ public class GenerateElectricityServiceImpl extends ServiceImpl<GenerateElectric
     @Autowired
     private GenerateElectricityMapper generateElectricityMapper;
 
+    @Autowired
+    private EnterpriseMapper enterpriseMapper;
+
+    @Autowired
+    private CountComponent countComponent;
+
     @Override
     public void submit(GenerateElectricityDTO generateElectricityDTO) {
         ThreadInfo currentInfo = BaseContext.getCurrentInfo();
@@ -33,8 +43,11 @@ public class GenerateElectricityServiceImpl extends ServiceImpl<GenerateElectric
         generateElectricity.setName(currentInfo.getName());
         generateElectricity.setCreate_date(LocalDateTime.now());
         generateElectricity.setStatus("待审核");
-        generateElectricity.setConsumption(0.0);  // 调试参数,计算算法后续完成
+        generateElectricity.setConsumption(Double.valueOf(String.format("%.4f", countComponent.generateGElectricityCount(generateElectricityDTO))));
         generateElectricityMapper.insert(generateElectricity);
+        Enterprise enterprise = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", currentInfo.getAccount()));
+        enterpriseMapper.update(new UpdateWrapper<Enterprise>().
+                eq("account", currentInfo.getAccount()).set("submit_count", enterprise.getSubmit_count() + 1));
     }
 
     @Override

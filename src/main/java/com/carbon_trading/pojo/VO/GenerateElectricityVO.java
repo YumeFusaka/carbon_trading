@@ -14,6 +14,8 @@ public class GenerateElectricityVO {
 
     private String name;
 
+    private String account;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime create_date;
 

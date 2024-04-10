@@ -8,7 +8,5 @@ public class AgencyRegisterDTO {
 
     String password;
 
-    String re_password;
-
     String name;
 }

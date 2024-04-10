@@ -12,6 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @Slf4j
 public class EnterpriseServiceImpl extends ServiceImpl<EnterpriseMapper, Enterprise> implements EnterpriseService {
@@ -28,6 +30,7 @@ public class EnterpriseServiceImpl extends ServiceImpl<EnterpriseMapper, Enterpr
         }
         enterprise = new Enterprise();
         BeanUtils.copyProperties(enterpriseRegisterDTO, enterprise);
+        enterprise.setCreate_time(LocalDateTime.now());
         enterpriseMapper.insert(enterprise);
     }
 

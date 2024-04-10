@@ -52,7 +52,7 @@ public class GenerateElectricity implements Serializable {
     private Double natural_gas;
 
     @TableField("coke_oven_gas")
-    private Double cokeOven_gas;
+    private Double coke_oven_gas;
 
     @TableField("other_gas")
     private Double other_gas;

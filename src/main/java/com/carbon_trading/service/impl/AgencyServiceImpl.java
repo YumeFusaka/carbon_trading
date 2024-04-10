@@ -12,6 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @Slf4j
 public class AgencyServiceImpl extends ServiceImpl<AgencyMapper, Agency> implements AgencyService {
@@ -28,6 +30,7 @@ public class AgencyServiceImpl extends ServiceImpl<AgencyMapper, Agency> impleme
         }
         agency = new Agency();
         BeanUtils.copyProperties(agencyRegisterDTO, agency);
+        agency.setCreate_time(LocalDateTime.now());
         agencyMapper.insert(agency);
     }
 

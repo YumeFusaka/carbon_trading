@@ -9,8 +9,6 @@ public class EnterpriseRegisterDTO {
 
     String password;
 
-    String re_password;
-
     String type;
 
     String name;

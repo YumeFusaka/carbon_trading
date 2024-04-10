@@ -55,6 +55,10 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
         trade.setStatus("待接受");
         trade.setCreate_date(LocalDateTime.now());
         enterpriseTradeMapping.insert(trade);
+        Enterprise initiator = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", currentInfo.getAccount()));
+        Enterprise receiver = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", receiverAccount));
+        enterpriseMapper.update(new UpdateWrapper<Enterprise>().eq("account", currentInfo.getAccount()).set("trade_count", initiator.getTrade_count() + 1));
+        enterpriseMapper.update(new UpdateWrapper<Enterprise>().eq("account", receiverAccount).set("trade_count", receiver.getTrade_count() + 1));
     }
 
     @Override
@@ -87,10 +91,15 @@ public class EnterpriseTradeServiceImpl extends ServiceImpl<EnterpriseTradeMappi
             try {
                 String map_id = soildityComponent.addRecord(trade.getInitiator_account(), "0", trade.getPay_coin().toString(), handleTradeDTO.getTrade_id());
                 wrapper.set("map_id", map_id);
+                Enterprise initiator = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", trade.getInitiator_account()));
+                Enterprise receiver = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", trade.getReceiver_account()));
+                enterpriseMapper.update(new UpdateWrapper<Enterprise>().eq("account", initiator.getAccount()).set("carbon_coin", initiator.getCarbon_coin() - trade.getPay_coin()));
+                enterpriseMapper.update(new UpdateWrapper<Enterprise>().eq("account", receiver.getAccount()).set("carbon_coin", receiver.getCarbon_coin() + trade.getPay_coin()));
             } catch (ABICodecException | TransactionBaseException e) {
                 throw new RuntimeException(e);
             }
         }
         enterpriseTradeMapping.update(wrapper);
+
     }
 }

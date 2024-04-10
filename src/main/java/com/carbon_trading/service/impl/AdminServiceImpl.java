@@ -8,11 +8,13 @@ import com.carbon_trading.common.context.BaseContext;
 import com.carbon_trading.component.SoildityComponent;
 import com.carbon_trading.mapper.AdminMapper;
 import com.carbon_trading.mapper.ElectricGridMapper;
+import com.carbon_trading.mapper.EnterpriseMapper;
 import com.carbon_trading.mapper.GenerateElectricityMapper;
 import com.carbon_trading.pojo.DTO.AuditDTO;
 import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.Entity.Admin;
 import com.carbon_trading.pojo.Entity.ElectricGrid;
+import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.Entity.GenerateElectricity;
 import com.carbon_trading.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Autowired
     private SoildityComponent soildityComponent;
 
+    @Autowired
+    private EnterpriseMapper enterpriseMapper;
+
     @Override
     public Admin login(LoginDTO adminLoginDTO) {
         Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>().eq("account", adminLoginDTO.getAccount())
@@ -56,6 +61,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             try {
                 String map_id = soildityComponent.addRecord(generateElectricity.getAccount(), "1", generateElectricity.getConsumption().toString(), auditDTO.getId());
                 generateElectricityMapper.update(new UpdateWrapper<GenerateElectricity>().eq("id", auditDTO.getId()).set("map_id", map_id));
+                Enterprise enterprise = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", generateElectricity.getAccount()));
+                enterpriseMapper.update(new UpdateWrapper<Enterprise>()
+                        .set("carbon_coin", enterprise.getCarbon_coin() - generateElectricity.getConsumption()).eq("account", generateElectricity.getAccount()));
             } catch (ABICodecException | TransactionBaseException e) {
                 throw new RuntimeException(e);
             }
@@ -71,6 +79,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
             try {
                 String map_id = soildityComponent.addRecord(electricGrid.getAccount(), "2", electricGrid.getConsumption().toString(), auditDTO.getId());
                 electricGridMapper.update(new UpdateWrapper<ElectricGrid>().eq("id", auditDTO.getId()).set("map_id", map_id));
+                Enterprise enterprise = enterpriseMapper.selectOne(new QueryWrapper<Enterprise>().eq("account", electricGrid.getAccount()));
+                enterpriseMapper.update(new UpdateWrapper<Enterprise>()
+                        .set("carbon_coin", enterprise.getCarbon_coin() - electricGrid.getConsumption()).eq("account", electricGrid.getAccount()));
             } catch (ABICodecException | TransactionBaseException e) {
                 throw new RuntimeException(e);
             }
