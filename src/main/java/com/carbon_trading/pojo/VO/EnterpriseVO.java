@@ -2,7 +2,6 @@ package com.carbon_trading.pojo.VO;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import java.time.LocalDateTime;
 

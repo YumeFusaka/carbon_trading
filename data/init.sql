@@ -2,21 +2,24 @@ use carbon_trading;
 
 create table admin
 (
-    id       bigint auto_increment comment '主键'
+    id          bigint auto_increment comment '主键'
         primary key,
-    account  varchar(30) null comment '账号',
-    password varchar(30) null comment '密码',
-    name     varchar(30) null comment '管理名'
+    account     varchar(30) null comment '账号',
+    password    varchar(30) null comment '密码',
+    name        varchar(30) null comment '管理名',
+    create_time datetime    null comment '创建时间'
 );
 
 create table agency
 (
-    id       bigint auto_increment comment '主键'
+    id          bigint auto_increment comment '主键'
         primary key,
-    account  varchar(30) null comment '账号',
-    password varchar(30) null comment '密码',
-    name     varchar(30) null comment '机构名'
+    account     varchar(30) null comment '账号',
+    password    varchar(30) null comment '密码',
+    name        varchar(30) null comment '机构名',
+    create_time datetime    null comment '创建时间'
 );
+
 
 create table electric_grid
 (
@@ -41,19 +44,23 @@ create table electric_grid
 
 create table enterprise
 (
-    id          bigint auto_increment comment '主键'
+    id           bigint auto_increment comment '主键'
         primary key,
-    name        varchar(255)       not null comment '企业名称',
-    type        varchar(20)        not null comment '企业类型',
-    account     varchar(30)        not null comment '账号',
-    password    varchar(30)        not null comment '密码',
-    carbon_coin double default 100 not null comment '碳币'
+    name         varchar(255)            not null comment '企业名称',
+    type         varchar(20)             not null comment '企业类型',
+    account      varchar(30)             not null comment '账号',
+    password     varchar(30)             not null comment '密码',
+    carbon_coin  double default 10000000 not null comment '碳币',
+    trade_count  int    default 0        not null comment '交易数量',
+    submit_count int    default 0        not null comment '提交数量',
+    create_time  datetime                null comment '创建时间'
 );
+
 
 create table generate_electricity
 (
     id                  bigint auto_increment comment '主键'
-    primary key,
+        primary key,
     account             varchar(30)      not null comment '账号',
     create_date         datetime         not null comment '创建日期',
     status              varchar(10)      not null comment '状态',
@@ -88,4 +95,5 @@ create table trade
     map_id            varchar(40)   null comment '映射在fisco的id'
 );
 
-insert into admin (account, password, name) values ('admin','admin','admin');
+insert into admin (account, password, name)
+values ('admin', 'admin', 'admin');
