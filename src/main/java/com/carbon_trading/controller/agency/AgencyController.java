@@ -5,6 +5,8 @@ import com.carbon_trading.common.result.Result;
 import com.carbon_trading.pojo.DTO.AgencyRegisterDTO;
 import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.Entity.Agency;
+import com.carbon_trading.pojo.VO.AdminVO;
+import com.carbon_trading.pojo.VO.AgencyVO;
 import com.carbon_trading.pojo.VO.LoginVO;
 import com.carbon_trading.service.AgencyService;
 import com.carbon_trading.utils.JwtUtils;
@@ -57,5 +59,11 @@ public class AgencyController {
         return Result.success(LoginVO.builder()
                 .Authorization(token)
                 .build());
+    }
+
+    @GetMapping("/info")
+    @Operation(summary = "获取信息")
+    public Result<AgencyVO> getInfo() {
+        return Result.success(agencyService.getInfo());
     }
 }

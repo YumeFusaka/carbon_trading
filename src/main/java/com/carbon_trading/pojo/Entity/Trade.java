@@ -37,7 +37,6 @@ public class Trade {
     private String status;
 
     @TableField("create_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime create_date;
 
     @TableField("map_id")

@@ -1,5 +1,6 @@
 package com.carbon_trading.pojo.VO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +17,6 @@ public class GenerateElectricityVO {
 
     private String account;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime create_date;
 
     private Double consumption;

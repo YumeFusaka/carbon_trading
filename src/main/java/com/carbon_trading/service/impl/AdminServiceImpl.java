@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.carbon_trading.common.context.BaseContext;
+import com.carbon_trading.common.context.ThreadInfo;
 import com.carbon_trading.component.SoildityComponent;
 import com.carbon_trading.mapper.AdminMapper;
 import com.carbon_trading.mapper.ElectricGridMapper;
@@ -16,10 +17,12 @@ import com.carbon_trading.pojo.Entity.Admin;
 import com.carbon_trading.pojo.Entity.ElectricGrid;
 import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.Entity.GenerateElectricity;
+import com.carbon_trading.pojo.VO.AdminVO;
 import com.carbon_trading.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.fisco.bcos.sdk.abi.ABICodecException;
 import org.fisco.bcos.sdk.transaction.model.exception.TransactionBaseException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +47,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public Admin login(LoginDTO adminLoginDTO) {
-        Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>().eq("account", adminLoginDTO.getAccount())
+        Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>()
+                .eq("account", adminLoginDTO.getAccount())
                 .eq("password", adminLoginDTO.getPassword()));
         if (admin == null) {
             throw new RuntimeException("账号或者密码错误");
@@ -86,5 +90,15 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public AdminVO getInfo() {
+        ThreadInfo currentInfo = BaseContext.getCurrentInfo();
+        BaseContext.removeCurrentInfo();
+        Admin admin = adminMapper.selectOne(new QueryWrapper<Admin>().eq("account", currentInfo.getAccount()));
+        AdminVO adminVO = new AdminVO();
+        BeanUtils.copyProperties(admin, adminVO);
+        return adminVO;
     }
 }

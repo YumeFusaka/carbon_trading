@@ -5,6 +5,8 @@ import com.carbon_trading.common.result.Result;
 import com.carbon_trading.pojo.DTO.AuditDTO;
 import com.carbon_trading.pojo.DTO.LoginDTO;
 import com.carbon_trading.pojo.Entity.Admin;
+import com.carbon_trading.pojo.VO.AdminVO;
+import com.carbon_trading.pojo.VO.EnterpriseVO;
 import com.carbon_trading.pojo.VO.LoginVO;
 import com.carbon_trading.service.AdminService;
 import com.carbon_trading.utils.JwtUtils;
@@ -65,5 +67,11 @@ public class AdminController {
         log.info("审核电网:{}", auditDTO);
         adminService.auditElectricGrid(auditDTO);
         return Result.success();
+    }
+
+    @GetMapping("/info")
+    @Operation(summary = "获取信息")
+    public Result<AdminVO> getInfo() {
+        return Result.success(adminService.getInfo());
     }
 }

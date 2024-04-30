@@ -6,10 +6,7 @@ import com.carbon_trading.pojo.DTO.*;
 import com.carbon_trading.pojo.Entity.ElectricGrid;
 import com.carbon_trading.pojo.Entity.Enterprise;
 import com.carbon_trading.pojo.Entity.GenerateElectricity;
-import com.carbon_trading.pojo.VO.ElectricGridVO;
-import com.carbon_trading.pojo.VO.GenerateElectricityVO;
-import com.carbon_trading.pojo.VO.LoginVO;
-import com.carbon_trading.pojo.VO.TradeVO;
+import com.carbon_trading.pojo.VO.*;
 import com.carbon_trading.service.ElectricGridService;
 import com.carbon_trading.service.EnterpriseService;
 import com.carbon_trading.service.EnterpriseTradeService;
@@ -81,6 +78,12 @@ public class EnterpriseController {
                 .build());
     }
 
+    @GetMapping("/info")
+    @Operation(summary = "获取信息")
+    public Result<EnterpriseVO> getInfo() {
+        return Result.success(enterpriseService.getInfo());
+    }
+
     @PostMapping("/submit/generateElectricity")
     @Operation(summary = "提交发电数据")
     public Result generateElectricitySubmit(@RequestBody GenerateElectricityDTO generateElectricityDTO) {
@@ -110,9 +113,9 @@ public class EnterpriseController {
         return Result.success(generateElectricityVOS);
     }
 
-    @GetMapping("/history/electricityGrid")
+    @GetMapping("/history/electricGrid")
     @Operation(summary = "电网历史数据")
-    public Result<ArrayList<ElectricGridVO>> getElectricityGridHistory() {
+    public Result<ArrayList<ElectricGridVO>> getElectricGridHistory() {
         List<ElectricGrid> electricGrids = electricGridService.queryHistory();
         ArrayList<ElectricGridVO> electricGridVOS = new ArrayList<>();
         for (ElectricGrid electricGrid : electricGrids) {

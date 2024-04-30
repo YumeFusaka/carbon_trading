@@ -1,5 +1,6 @@
 package com.carbon_trading.pojo.VO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,6 +24,5 @@ public class TradeVO {
 
     private String status;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime create_date;
 }

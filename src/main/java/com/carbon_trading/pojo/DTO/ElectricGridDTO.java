@@ -1,14 +1,18 @@
 package com.carbon_trading.pojo.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class ElectricGridDTO {
 
+    @JsonProperty(value = "PPGCP")
     private Double PPGCP;
 
+    @JsonProperty(value = "IEE")
     private Double IEE;
 
+    @JsonProperty(value = "IIE")
     private Double IIE;
 
     private Double electricity_sales;

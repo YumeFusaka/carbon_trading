@@ -11,8 +11,15 @@ import org.fisco.bcos.sdk.transaction.manager.TransactionProcessorFactory;
 import org.fisco.bcos.sdk.transaction.model.dto.CallResponse;
 import org.fisco.bcos.sdk.transaction.model.dto.TransactionResponse;
 import org.fisco.bcos.sdk.transaction.model.exception.TransactionBaseException;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +27,18 @@ import java.util.List;
 @Slf4j
 public class SoildityComponent {
 
-    public static final String configFile = "src/main/resources/config-fisco.toml";
+    public String configFile;
 
-    private String contractAddress = "0x6b32dc8c4313041c7c66de289be5f42295a47a81";
+    public String abiFile;
+
+    private String contractAddress = "0x75f37f015839182d127907abb1b6bdff6d937079";
 
     private AssembleTransactionProcessor transactionProcessor;
 
     public SoildityComponent() throws Exception {
+        configFile = "/root/carbon_trading/config-fisco.toml";
+        abiFile = "/root/carbon_trading/abi/";
+
         // 初始化BcosSDK对象
         BcosSDK sdk = BcosSDK.build(configFile);
         // 获取Client对象，此处传入的群组ID为1
@@ -35,8 +47,7 @@ public class SoildityComponent {
         CryptoKeyPair keyPair = client.getCryptoSuite().createKeyPair();
 
         transactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor
-                (client, keyPair, "src/main/resources/abi/", "");
-
+                (client, keyPair, abiFile, "");
     }
 
     public String addRecord(String account, String type_id, String consume, String id) throws ABICodecException, TransactionBaseException {

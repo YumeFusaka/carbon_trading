@@ -1,5 +1,8 @@
 package com.carbon_trading.pojo.VO;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,17 +17,19 @@ public class ElectricGridVO {
 
     private String name;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime create_date;
 
     private String status;
 
     private Double consumption;
 
+    @JsonProperty(value = "PPGCP")
     private Double PPGCP;
 
+    @JsonProperty(value = "IIE")
     private Double IIE;
 
+    @JsonProperty(value = "IEE")
     private Double IEE;
 
     private Double electricity_sales;

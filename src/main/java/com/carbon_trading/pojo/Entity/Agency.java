@@ -26,6 +26,5 @@ public class Agency {
     String name;
 
     @TableField("create_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime create_time;
 }

@@ -1,5 +1,6 @@
 package com.carbon_trading.pojo.VO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +17,6 @@ public class EnterpriseVO {
 
     Double carbon_coin;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime create_time;
 
     Integer submit_count;
