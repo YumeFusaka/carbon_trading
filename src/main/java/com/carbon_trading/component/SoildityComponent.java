@@ -31,7 +31,7 @@ public class SoildityComponent {
 
     public String abiFile;
 
-    private String contractAddress = "0x75f37f015839182d127907abb1b6bdff6d937079";
+    private String contractAddress = "0xe70de9329c8a42b844f23da1f65654ff3437f22b";
 
     private AssembleTransactionProcessor transactionProcessor;
 
